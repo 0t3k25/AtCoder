@@ -1,1 +1,2 @@
 # Atcorder
+purpose: Learn algorithm
