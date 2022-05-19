@@ -1,8 +1,13 @@
 N = int(input())
-ST = [map(str, input().split()) for _ in range(N)]
-S, T = [list(i) for i in zip(*ST)]
-letter_list = list(set(S))
-T_number = [int(T[S.index(i)]) for i in letter_list]
-T_index = [int(S.index(i)) for i in letter_list]
-max_index = [i for i, x in enumerate(T_number) if x == max(T_number)]
-print(min([int(T_index[i]) for i in max_index]) + 1)
+
+score = dict()
+PP = [-1, -1]
+for i in range(1, N + 1):
+    si, ti = input().split()
+    ti = int(ti)
+    if si not in score:
+        score[si] = ti
+        if PP[0] < ti:
+            PP = [ti, i]
+print(score)
+print(PP[1])
