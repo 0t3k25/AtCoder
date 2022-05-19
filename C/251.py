@@ -9,5 +9,4 @@ for i in range(1, N + 1):
         score[si] = ti
         if PP[0] < ti:
             PP = [ti, i]
-print(score)
 print(PP[1])
