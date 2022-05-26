@@ -1,15 +1,21 @@
+from typing import List
+
+
 class Solution:
-    def validMountainArray(self, arr: List[int]) -> bool:
-        i = 0
+    def replaceElements(self, arr: List[int]) -> List[int]:
         N = len(arr)
-        # up
-        while i + 1 < N and arr[i] < arr[i + 1]:
-            i += 1
+        left_max = -1
+        temp = 0
+        if N == 1:
+            arr[0] = left_max
+            return
+        for i in range(N - 1, -1, -1):
+            temp = arr[i]
+            arr[i] = left_max
+            if temp > left_max:
+                left_max = temp
+        print(arr)
 
-        # peak is first or last
-        if i == 0 or i == N - 1:
-            return False
 
-        while i + 1 < N and arr[i] > arr[i + 1]:
-            i += 1
-        return i == N - 1
+a = Solution()
+a.replaceElements(arr=[1, 2, 3, 4])
