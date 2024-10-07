@@ -3,27 +3,16 @@ class Solution:
         """
         Do not return anything, modify arr in-place instead.
         """
-        possible_dups = 0
-        length = len(arr) - 1
+        zeros = arr.count(0)
+        i, j = len(arr) - 1, len(arr) + zeros - 1  # define two pointer
 
-        for left in range(length + 1):
-            if left > length - possible_dups:
-                break
+        while i < j:
+            if j < len(arr):
+                arr[j] = arr[i]  # Assign value first
 
-            if arr[left] == 0:
-                if left == length - possible_dups:
-                    arr[length] = 0
-
-                    length -= 1
-                    break
-
-                possible_dups += 1
-        last = length - possible_dups
-
-        for i in range(last, -1, -1):
             if arr[i] == 0:
-                arr[i + possible_dups] = 0
-                possible_dups -= 1
-                arr[i + possible_dups] = 0
-            else:
-                arr[i + possible_dups] = arr[i]
+                j -= 1
+                if j < len(arr):
+                    arr[j] = arr[i]
+            i -= 1
+            j -= 1
