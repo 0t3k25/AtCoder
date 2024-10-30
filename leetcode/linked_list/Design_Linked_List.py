@@ -1,6 +1,7 @@
 
 class MyLinkedList:
 
+# head = 0など
     def __init__(self):
         
 
