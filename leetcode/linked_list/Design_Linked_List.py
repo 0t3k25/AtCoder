@@ -1,24 +1,24 @@
-
 class MyLinkedList:
+    """head"""
 
-# head = 0など
-    def __init__(self):
-        
+    def __init__(self, size):
+        self.head = None
+        self.size = size
 
     def get(self, index: int) -> int:
-        
+        pass
 
     def addAtHead(self, val: int) -> None:
-        
+        pass
 
     def addAtTail(self, val: int) -> None:
-        
+        pass
 
     def addAtIndex(self, index: int, val: int) -> None:
-        
+        pass
 
     def deleteAtIndex(self, index: int) -> None:
-        
+        pass
 
 
 # Your MyLinkedList object will be instantiated and called as such:
