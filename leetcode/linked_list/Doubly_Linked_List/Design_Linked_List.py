@@ -5,33 +5,30 @@ class MyLinkedList:
         self.tail = None
 
     def get(self, index: int) -> int:
-        val = self.head
-        while index > 0 and val is not None:
-            val = val.next
-            index -= 1
-        if val is None:
+        point = self.head
+        current_index = 0
+        while current_index < index and point:
+            point = point.next
+            index += 1
+        if not point:
             return -1
-        return val.value
+        return point.value
 
     def addAtHead(self, val: int) -> None:
         new_node = Node(val, None, self.head)
         if self.head:
             self.head.prev = new_node
         else:
-            
-
+            self.tail = new_node
+        self.head = new_node
 
     def addAtTail(self, val: int) -> None:
-        point = self.head
-        # 空リスト
-        if point is None:
-            self.addAtHead(val)
-            return
-
-        # 最後のノードまで
-        while point.next is not None:
-            point = point.next
-        point.next = Node(val)
+        new_node = Node(val, self.tail, None)
+        if self.tail:
+            self.tail.next = new_node
+        else:
+            self.head = new_node
+        self.tail = new_node
 
     def addAtIndex(self, index: int, val: int) -> None:
         # indexが0なら先頭に追加
@@ -48,7 +45,7 @@ class MyLinkedList:
             current_index += 1
 
         # indexがリストの長さより大きい場合は挿入せず終了
-        if point is None:
+        if not point:
             return
 
         # 末尾に追加する場合
@@ -57,13 +54,17 @@ class MyLinkedList:
             return
 
         # 通常の挿入処理
-        point.next = Node(val, point.next)
+        new_node = Node(val, point, point.next)
+        point.next.prev = new_node
+        point.next = new_node
 
     def deleteAtIndex(self, index: int) -> None:
         # indexが0なら先頭に追加
         if index == 0:
-            if self.head is not None:  # リストが空でないことを確認
+            if self.head:  # リストが空でないことを確認
                 self.head = self.head.next
+            if self.head:  # 更新後のリストが空でない
+                self.head.prev = None
             return
 
         point = self.head
@@ -74,11 +75,23 @@ class MyLinkedList:
             point = point.next
             current_index += 1
 
-        if point is None or point.next is None:
+        # indexがリストの長さより大きい場合は挿入せず終了
+        if not point:
+            return
+
+        # 末尾に追加する場合
+        if not point.next and current_index + 1 == index:
+            self.tail = self.tail.prev
+            if self.tail:
+                self.tail.next = None
+            else:
+                self.head = None
             return
 
         # 通常の削除処理
         point.next = point.next.next
+        if point.next:
+            point.next.prev = point
 
 
 class Node:
