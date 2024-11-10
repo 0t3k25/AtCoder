@@ -6,100 +6,78 @@ class MyLinkedList:
 
     def get(self, index: int) -> int:
         point = self.head
-        current_index = 0
-        while current_index < index and point:
+
+        while point and index > 0:
             point = point.next
-            index += 1
+            index -= 1
+
         if not point:
             return -1
+
         return point.value
 
     def addAtHead(self, val: int) -> None:
-        new_node = Node(val, None, self.head)
-        if self.head:
-            self.head.prev = new_node
-        else:
+        # create node
+        new_node = Node(val)
+        # confirm node
+        if not self.head:  # empty
             self.tail = new_node
+        else:
+            new_node.next, self.head.prev = self.head, new_node
+
         self.head = new_node
 
     def addAtTail(self, val: int) -> None:
-        new_node = Node(val, self.tail, None)
-        if self.tail:
-            self.tail.next = new_node
-        else:
+        new_node = Node(val)
+
+        if not self.tail:
             self.head = new_node
+        else:
+            self.tail.next = new_node
+            new_node.prev = self.tail
+
         self.tail = new_node
 
     def addAtIndex(self, index: int, val: int) -> None:
-        # indexが0なら先頭に追加
+        # first node
         if index == 0:
             self.addAtHead(val)
             return
 
         point = self.head
-        current_index = 0
 
-        # 指定されたindexの一つ前の位置まで移動
-        while current_index < index - 1 and point is not None:
+        while point and index > 0:
             point = point.next
-            current_index += 1
+            index -= 1
 
-        # indexがリストの長さより大きい場合は挿入せず終了
-        if not point:
+        # out of index
+        if index > 0:
             return
 
-        # 末尾に追加する場合
-        if point.next is None and current_index + 1 == index:
+        new_node = Node(val)
+        # last node
+        if not point:
             self.addAtTail(val)
             return
 
-        # 通常の挿入処理
-        new_node = Node(val, point, point.next)
+        new_node = Node(val)
         point.next.prev = new_node
+        new_node.next = point.next
         point.next = new_node
+        new_node.prev = point
 
     def deleteAtIndex(self, index: int) -> None:
-        # indexが0なら先頭に追加
-        if index == 0:
-            if self.head:  # リストが空でないことを確認
-                self.head = self.head.next
-            if self.head:  # 更新後のリストが空でない
-                self.head.prev = None
-            return
 
-        point = self.head
-        current_index = 0
-
-        # 指定されたindexの一つ前の位置まで移動
-        while current_index < index - 1 and point is not None:
-            point = point.next
-            current_index += 1
-
-        # indexがリストの長さより大きい場合は挿入せず終了
-        if not point:
-            return
-
-        # 末尾に追加する場合
-        if not point.next and current_index + 1 == index:
-            self.tail = self.tail.prev
-            if self.tail:
-                self.tail.next = None
-            else:
-                self.head = None
-            return
-
-        # 通常の削除処理
-        point.next = point.next.next
-        if point.next:
-            point.next.prev = point
+        # point.next = point.next.next
+        # point.next.prev = point
+        pass
 
 
 class Node:
-
-    def __init__(self, val: int, prev=None, next=None):
-        self.value = val
-        self.prev = prev
-        self.next = next
+    def __init__(self, value: int):
+        self.value = value
+        self.prev = None
+        self.next = None
 
 
 # Your MyLinkedList object will be instantiated and called as such:
