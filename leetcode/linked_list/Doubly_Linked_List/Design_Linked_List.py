@@ -60,12 +60,6 @@ class MyLinkedList:
             self.addAtTail(val)
             return
 
-        new_node = Node(val)
-        point.next.prev = new_node
-        new_node.next = point.next
-        point.next = new_node
-        new_node.prev = point
-
     def deleteAtIndex(self, index: int) -> None:
 
         # point.next = point.next.next
