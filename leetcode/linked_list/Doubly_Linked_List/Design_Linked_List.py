@@ -54,17 +54,45 @@ class MyLinkedList:
         if index > 0:
             return
 
-        new_node = Node(val)
         # last node
         if not point:
             self.addAtTail(val)
             return
 
-    def deleteAtIndex(self, index: int) -> None:
+        new_node = Node(val)
+        new_node.prev = point.prev
+        new_node.next = point
+        point.prev.next = new_node
+        point.prev = new_node
 
-        # point.next = point.next.next
-        # point.next.prev = point
-        pass
+    def deleteAtIndex(self, index: int) -> None:
+        # first node
+        if index == 0 and self.head:
+            if self.head == self.tail:
+                self.head = self.tail = None
+            else:
+                self.head = self.head.next
+                self.head.prev = None
+            return
+
+        point = self.head
+
+        while point and index > 0:
+            point = point.next
+            index -= 1
+
+        # out of index
+        if not point:
+            return
+
+        # last node
+        if not point.next:
+            self.tail = self.tail.prev
+            self.tail.next = None
+            return
+
+        point.prev.next = point.next
+        point.next.prev = point.prev
 
 
 class Node:
