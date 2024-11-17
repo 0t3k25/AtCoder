@@ -4,35 +4,28 @@ class Solution:
             return head
 
         self.__flatten(head)
+
         return head
 
-    def __flatten(self, node: "Node") -> "Node":
-        cur = node
-        last = node  # 最後のnode追跡
-
+    def __flatten(self, node):
+        cur = last = node
         while cur:
             next_node = cur.next
-
-            # 子リストが存在
             if cur.child:
-                child_last = self.__flatten(cur.child)
-
-                # 子リストを親リストに繋げる
+                child_last = self.__flatten(cur.child)  # 子ノードの最後の要素を返す
                 cur.next = cur.child
-                cur.child.prev = cur
+                cur.next.prev = cur
                 cur.child = None
 
-                child_last.next = next_node
                 if next_node:
+                    child_last.next = next_node
                     next_node.prev = child_last
 
-                # 子リストの最後のノード更新
                 last = child_last
+                cur = child_last
             else:
                 last = cur
-
-            cur = next_node
-
+                cur = next_node
         return last
 
 
