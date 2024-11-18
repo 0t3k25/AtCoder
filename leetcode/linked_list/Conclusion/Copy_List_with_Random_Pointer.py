@@ -36,5 +36,23 @@ class Solution:
             cur.next = new_node
 
             cur = new_node.next
-        
-        while
+
+        cur = head
+        while cur:
+            if cur.random:
+                cur.next.random = cur.random.next
+            cur = cur.next.next
+
+        cur = head
+        pseudo_head = Node(0)  # コピーされたリストの先頭ダミーノード
+        copy_cur = pseudo_head
+
+        while cur:
+            copy = cur.next
+            cur.next = copy.next
+            copy_cur.next = copy
+            copy_cur = copy
+
+            cur = cur.next
+        # コピーリストの先頭を返す
+        return pseudo_head.next
