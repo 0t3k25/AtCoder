@@ -10,18 +10,31 @@ class Node:
 
 class Solution:
     def copyRandomList(self, head: "Optional[Node]") -> "Optional[Node]":
-        copy_dict = dict()
+        # hashmap
+        # copy_dict = dict()
+        # cur = head
+
+        # while cur:
+        #     copy_dict[cur] = Node(cur.val)
+        #     cur = cur.next
+
+        # cur = head
+        # while cur:
+        #     if cur.next:
+        #         copy_dict[cur].next = copy_dict[cur.next]
+        #     if cur.random:
+        #         copy_dict[cur].random = copy_dict[cur.random]
+        #     cur = cur.next
+        # return copy_dict[head] if head else None
+
+        # in place approach
         cur = head
 
+        # nodeの間に挿入
         while cur:
-            copy_dict[cur] = Node(cur.val)
-            cur = cur.next
+            new_node = Node(cur.val, cur.next)
+            cur.next = new_node
 
-        cur = head
-        while cur:
-            if cur.next:
-                copy_dict[cur].next = copy_dict[cur.next]
-            if cur.random:
-                copy_dict[cur].random = copy_dict[cur.random]
-            cur = cur.next
-        return copy_dict[head] if head else None
+            cur = new_node.next
+        
+        while
