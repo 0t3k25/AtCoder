@@ -13,20 +13,17 @@ class Node:
 
 class Solution:
     def connect(self, root: "Optional[Node]") -> "Optional[Node]":
+        def helper(left, right):
+            if not left or not right:
+                return
+
+            left.next = right
+            helper(left.right, right.left)
+            helper(left.left, left.right)
+            helper(right.left, right.right)
+
         if not root:
-            return None
-        queue = deque([root])
-        while queue:
-            level = []
-            for _ in range(len(queue)):
-                node = queue.popleft()
-                level.append(node)
-                if node.left:
-                    queue.append(node.left)
-                if node.right:
-                    queue.append(node.right)
+            return
 
-            for i in range(len(level) - 1):
-                level[i].next = level[i + 1]
-
+        helper(root.left, root.right)
         return root
