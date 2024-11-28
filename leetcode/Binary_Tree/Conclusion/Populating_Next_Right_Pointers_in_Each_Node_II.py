@@ -20,6 +20,7 @@ class Solution:
 
         while deque:
             level = []
+            for _ in range(len(deque))
             node = deque.popleft()
             if node.left:
                 deque.append(node.left)
