@@ -16,13 +16,19 @@ class Solution:
         if not root:
             return root
 
-        deque = deque([root])
+        queue = deque([root])
 
-        while deque:
+        while queue:
             level = []
-            for _ in range(len(deque)):
-                node = deque.popleft()
+            for _ in range(len(queue)):
+                node = queue.popleft()
+                level.append(node)
                 if node.left:
-                    deque.append(node.left)
+                    queue.append(node.left)
                 if node.right:
-                    deque.append(node.right)
+                    queue.append(node.right)
+
+            for i in range(len(level) - 1):
+                level[i].next = level[i + 1]
+
+        return root
