@@ -5,9 +5,9 @@ class Solution:
         while left < right:
             mid = left + (right - left) // 2
 
-            if nums[left] < nums[mid]:
-                right = mid - 1
+            if nums[mid] > nums[right]:
+                left = mid + 1
             else:
-                left = mid
+                right = mid
 
-        return left
+        return nums[left]
